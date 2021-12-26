@@ -55,24 +55,23 @@ namespace scraping
             }
             catch { }
             if (filter1 != "") url += filter1; //adding the conditions to the link
-            else
-            {
-                url += "?";
-            }
+            url += "?";
             if (filter2 != "") url += filter2;
-            if (filter3 != "") url += "&" + filter3;
+            url += "&";
+            if (filter3 != "") url += filter3;
             HtmlWeb web = new HtmlWeb();
             HtmlAgilityPack.HtmlDocument doc = web.Load(url);
             //jobs.Text = url + "\n";
             HtmlNode node = null;
             node = doc.DocumentNode.SelectSingleNode("//div[@class='container']/div[@class='page-header']/h1/span[@class='text-muted']"); //to find how many job there is
             int number_of_jobs = Convert.ToInt32(node.InnerText);
-            int number_of_pages = (int)(number_of_jobs / 15) + 1;
+            int number_of_pages = (int)Math.Ceiling((double)(number_of_jobs) / 15);
             HtmlNodeCollection linkNodes = doc.DocumentNode.SelectNodes("//li[@class='list-jobs__item']/div[@class='list-jobs__title']/a[@class='profile']/span");
             foreach (var obj in linkNodes)
             {
                 jobs.Text += obj.InnerText + "\n";
             }
+            //jobs.Text += number_of_pages;
             for (int i = 2; i < number_of_pages; i++)
             {
                 url += "&page=" + i; //adding the page number to the end of the link
