@@ -75,7 +75,7 @@ namespace scraping
             }
             for (int i = 2; i < number_of_pages; i++)
             {
-                url += "&page=" + i; //adding page to the end of the link
+                url += "&page=" + i; //adding the page number to the end of the link
                 doc = web.Load(url);
                 linkNodes = doc.DocumentNode.SelectNodes("//li[@class='list-jobs__item']/div[@class='list-jobs__title']/a[@class='profile']/span");
                 foreach (var obj in linkNodes)
